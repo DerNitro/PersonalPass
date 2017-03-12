@@ -23,7 +23,7 @@ from string import punctuation, digits
 __author__ = "Sergey V. Utkin"
 __copyright__ = "Copyright 2016, Sergey V. Utkin"
 __license__ = "GPLv3"
-__version__ = "1.0.0b"
+__version__ = "1.0b"
 __email__ = "utkins01@gmail.com"
 
 parser = argparse.ArgumentParser(description='Маленький генератор паролей')
