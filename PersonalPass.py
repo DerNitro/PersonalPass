@@ -139,8 +139,9 @@ if not os.path.isdir(work_dir):
     os.mkdir(work_dir, mode=0o700)
 elif oct(os.stat(work_dir).st_mode) == '0o40700':
     pass
+elif oct(os.stat(work_dir).st_mode) == '0o40777' and os.name == 'nt':
+    pass
 else:
-    print(oct(os.stat(work_dir).st_mode))
     print('ERROR!!! Incorrect permissions for path: {0}'.format(work_dir))
     sys.exit(2)
 
@@ -153,6 +154,7 @@ if os.path.isfile(config_file):
         print('incorrect permissions on the configuration file: {}'.format(config_file))
         sys.exit(2)
 else:
+    # TODO: Добавить создание дефолтного конфига
     config_file = None
 
 Key = getpass.getpass(prompt='Please enter key: ')
