@@ -18,7 +18,8 @@ import argparse
 import sys
 import getpass
 import configparser
-from string import punctuation, digits
+from string import punctuation, digits, ascii_letters
+import random
 
 __author__ = "Sergey V. Utkin"
 __copyright__ = "Copyright 2016, Sergey V. Utkin"
@@ -128,7 +129,6 @@ def get_config(resource, option):
 
 def algorithm(r, k, f):
     passw = Password(r, k, f)
-    print(passw.MagicNumber, passw.Digits, passw.Special)
     while (not passw.Digits and Digits) or (not passw.Special and Special):
         passw.magic()
 
@@ -154,8 +154,20 @@ if os.path.isfile(config_file):
         print('incorrect permissions on the configuration file: {}'.format(config_file))
         sys.exit(2)
 else:
-    # TODO: Добавить создание дефолтного конфига
-    config_file = None
+    pkey = os.path.join(work_dir, 'default.pkey')
+    sole = ''.join(random.choice(ascii_letters + digits) for _ in range(255))
+    m = hashlib.sha256(bytes(sole, "utf-8"))
+    createFile = open(pkey, 'wb')
+    createFile.write(m.digest())
+    createFile.close()
+    os.chmod(pkey, 0o400)
+
+    config = configparser.ConfigParser()
+    config['default'] = {'len': 12,
+                         'file': pkey}
+    with open(config_file, 'w') as c:
+        config.write(c)
+
 
 Key = getpass.getpass(prompt='Please enter key: ')
 File = args.file
