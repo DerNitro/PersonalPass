@@ -24,10 +24,12 @@ import random
 __author__ = "Sergey V. Utkin"
 __copyright__ = "Copyright 2016, Sergey V. Utkin"
 __license__ = "GPLv3"
-__version__ = "1.0b"
+__version__ = "1.0"
 __email__ = "utkins01@gmail.com"
 
 parser = argparse.ArgumentParser(description='Маленький генератор паролей')
+parser.add_argument('--version', action='version',
+                    version='%(prog)s {version}'.format(version=__version__))
 parser.add_argument('--file', help='Файл шифровщик')
 parser.add_argument('--len', help='Длина пароля')
 parser.add_argument('--digits', action='store_true', help='Обязательное наличие цифр')
