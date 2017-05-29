@@ -13,7 +13,6 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='PersonalPass',
     version='1.0',
-    packages=[''],
     url='https://github.com/DerNitro/PersonalPass',
     license='GPLv3',
     author='Sergey <DerNitro> Utkin',

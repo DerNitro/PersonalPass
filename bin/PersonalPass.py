@@ -170,6 +170,8 @@ else:
     with open(config_file, 'w') as c:
         config.write(c)
 
+    os.chmod(config_file,0o600)
+
 
 Key = getpass.getpass(prompt='Please enter key: ')
 File = args.file
