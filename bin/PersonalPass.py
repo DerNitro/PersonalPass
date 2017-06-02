@@ -48,21 +48,21 @@ class Password:
     MagicNumber = 0
 
     def __init__(self, r, k, f):
-        tempKey = ''
+        temp_key = ''
         if len(r) <= len(k):
             for i in range(len(r)):
-                tempKey += r[i] + k[i]
+                temp_key += r[i] + k[i]
         else:
             for i in range(len(k)):
-                tempKey += r[i] + k[i]
+                temp_key += r[i] + k[i]
 
-        for ch in tempKey:
+        for ch in temp_key:
             self.MagicNumber += ord(ch)
 
         self.MagicNumber = abs((self.MagicNumber % int(Len)) - 1)
 
         fl = open(f, "rb")
-        crypt = hmac.new(tempKey.encode(), fl.readline(), hashlib.sha1)
+        crypt = hmac.new(temp_key.encode(), fl.readline(), hashlib.sha1)
         fl.close()
         self.Password = base64.encodebytes(crypt.digest()).decode("utf-8")[:int(Len)]
         self.check_digits()
@@ -89,9 +89,9 @@ class Password:
                 else:
                     n += int(self.MagicNumber)
             print(self.Password, self.Password[self.MagicNumber], list(punctuation)[n-1])
-            lPass = list(self.Password)
-            lPass[self.MagicNumber] = list(punctuation)[n-1]
-            self.Password = ''.join(lPass)
+            l_pass = list(self.Password)
+            l_pass[self.MagicNumber] = list(punctuation)[n-1]
+            self.Password = ''.join(l_pass)
         if not self.Digits:
             n = 0
             for x in range(int(self.MagicNumber * len(self.Password))):
@@ -100,9 +100,9 @@ class Password:
                 else:
                     n += int(self.MagicNumber)
             print(self.Password, self.Password[abs(self.MagicNumber - len(self.Password))], list(digits)[n-1])
-            lPass = list(self.Password)
-            lPass[abs(self.MagicNumber - len(self.Password))] = list(digits)[n-1]
-            self.Password = ''.join(lPass)
+            l_pass = list(self.Password)
+            l_pass[abs(self.MagicNumber - len(self.Password))] = list(digits)[n-1]
+            self.Password = ''.join(l_pass)
         self.check_special()
         self.check_digits()
         pass
@@ -117,12 +117,12 @@ def str2bool(s):
 
 def get_config(resource, option):
     if config_file is not None:
-        config = configparser.ConfigParser()
-        config.read(config_file)
-        if config.has_option(resource, option):
-            return config.get(resource, option)
-        elif config.has_option('default', option):
-            return config.get('default', option)
+        cfg = configparser.ConfigParser()
+        cfg.read(config_file)
+        if cfg.has_option(resource, option):
+            return cfg.get(resource, option)
+        elif cfg.has_option('default', option):
+            return cfg.get('default', option)
         else:
             return None
     else:
@@ -170,7 +170,7 @@ else:
     with open(config_file, 'w') as c:
         config.write(c)
 
-    os.chmod(config_file,0o600)
+    os.chmod(config_file, 0o600)
 
 
 Key = getpass.getpass(prompt='Please enter key: ')
